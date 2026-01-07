@@ -11,6 +11,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy]') }}
     steps:
       - uses: actions/checkout@v3
       
@@ -29,6 +30,7 @@ jobs:
           python test_all.py || echo "Tests completed"
       
       - name: Deploy to Railway
+        if: ${{ secrets.RAILWAY_TOKEN != '' }}
         uses: bervProject/railway-deploy@v0.2.4
         with:
           railway_token: ${{ secrets.RAILWAY_TOKEN }}
