@@ -1,0 +1,3 @@
+"""
+AfriLens AI Backend Package
+"""
